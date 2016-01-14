@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B144575C1C472A76008F9FD7 /* NSCache+DefaultCache.m in Sources */ = {isa = PBXBuildFile; fileRef = B144575B1C472A76008F9FD7 /* NSCache+DefaultCache.m */; };
 		B19DB5E61C46F05B00419876 /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B19DB5E51C46F05B00419876 /* CollectionViewCell.m */; };
 		B1DF15411C46E075005DB18E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B1DF15401C46E075005DB18E /* main.m */; };
 		B1DF15441C46E075005DB18E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B1DF15431C46E075005DB18E /* AppDelegate.m */; };
@@ -19,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B144575A1C472A76008F9FD7 /* NSCache+DefaultCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCache+DefaultCache.h"; sourceTree = "<group>"; };
+		B144575B1C472A76008F9FD7 /* NSCache+DefaultCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCache+DefaultCache.m"; sourceTree = "<group>"; };
 		B19DB5E41C46F05B00419876 /* CollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewCell.h; sourceTree = "<group>"; };
 		B19DB5E51C46F05B00419876 /* CollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewCell.m; sourceTree = "<group>"; };
 		B1DF153C1C46E075005DB18E /* LeonInstagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LeonInstagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -114,6 +117,8 @@
 		B1DF155D1C46E579005DB18E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B144575A1C472A76008F9FD7 /* NSCache+DefaultCache.h */,
+				B144575B1C472A76008F9FD7 /* NSCache+DefaultCache.m */,
 				B1DF155A1C46E4CD005DB18E /* InstagramJSONObject.h */,
 				B1DF155B1C46E4CD005DB18E /* InstagramJSONObject.m */,
 			);
@@ -190,6 +195,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B144575C1C472A76008F9FD7 /* NSCache+DefaultCache.m in Sources */,
 				B19DB5E61C46F05B00419876 /* CollectionViewCell.m in Sources */,
 				B1DF15581C46E122005DB18E /* NSURL+parameters.m in Sources */,
 				B1DF15471C46E075005DB18E /* ViewController.m in Sources */,

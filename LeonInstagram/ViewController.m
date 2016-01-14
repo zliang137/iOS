@@ -11,6 +11,7 @@
 #import "NSURL+parameters.h"
 #import "InstagramJSONObject.h"
 #import "CollectionViewCell.h"
+#import "NSCache+DefaultCache.h"
 
 @interface ViewController ()
 @property (nonatomic) NSMutableArray* datasource;
@@ -45,7 +46,16 @@
 
 -(void)fetchJSON: (NSURL *)url
 {
-    NSLog(@"%@", url.absoluteString);
+    //NSLog(@"%@", url.absoluteString);
+    //if ([[NSCache defaultCache] objectForKey:url.absoluteString]) {
+    //    return;
+    //}
+    //[[NSCache defaultCache] setObject:url.absoluteString forKey:url.absoluteString];
+    
+    NSMutableArray *newIndexPaths = [NSMutableArray new];
+    __block NSUInteger startingRow = self.datasource.count;
+    
+    
     NSURLRequest *request = [NSURLRequest requestWithURL: url];
     NSURLSessionTask *task = [[NSURLSession sharedSession] dataTaskWithRequest:request
 completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
@@ -62,13 +72,16 @@ completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response,
     
     for(NSDictionary* d in (NSArray *)dict[@"data"]) {
         [self.datasource addObject: [[InstagramJSONObject alloc] initWithJSONDictionary: d]];
+        [newIndexPaths addObject: [NSIndexPath indexPathForRow:startingRow inSection:0]];
+        startingRow ++;
     }
     
     //NSLog(@"Reload Data: count: %ld", self.datasource.count);
     self.nextFetchURL = [NSURL URLWithString:[dict valueForKeyPath: @"pagination.next_url"]];
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.collectionView reloadData];
+        [self.collectionView insertItemsAtIndexPaths: newIndexPaths];
+        
     });
     
 }];
@@ -78,15 +91,19 @@ completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response,
 
 #pragma mark - Scroll view delegates
 //infinite scrolling.
-/*
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    CGFloat currentBottomPosition = scrollView.contentOffset.y+scrollView.frame.size.height;
+    CGFloat currentBottomPosition = scrollView.contentOffset.y + scrollView.frame.size.height;
     CGFloat contentBottomPosition = scrollView.contentSize.height;
-    if (currentBottomPosition > contentBottomPosition && self.nextFetchURL) {
+    static CGFloat lastContentBottomPosition = 0;
+    
+    if ((currentBottomPosition + scrollView.frame.size.height >= contentBottomPosition)
+        && self.nextFetchURL
+        && fabs(lastContentBottomPosition - contentBottomPosition) > 1) {
+        lastContentBottomPosition = contentBottomPosition;
         [self fetchJSON: self.nextFetchURL];
     }
-}*/
+}
 
 #pragma mark - Searchbar delegates
 
@@ -100,7 +117,8 @@ completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response,
     NSDictionary *dict = @{@"client_id": CLIENT_ID, @"count": BATCH_SIZE};
     NSURL *url = [[NSURL alloc] initWithString:@"" relativeToURL:baseURL withParameterDictionary:dict];
     
-    [self fetchJSON: url];   
+    [self fetchJSON: url];
+    [searchBar resignFirstResponder];
 }
 
 @end
